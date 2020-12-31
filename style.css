@@ -19,20 +19,59 @@ header{
     display: grid;
     grid-template-rows: repeat(3,1fr);
     grid-template-columns: repeat(3,1fr);
-  width:20vw;
-  height: 20vw;
+  width:25vw;
+  height: 25vw;
   margin:auto;
-  gap:7px 7px;
+  margin-top: 100px;
+  
 }
 
 .grid-el{
-    background-color: aqua;
+    border: 3px black solid;
 }
-
+.player{
+    font-size: 50px;
+}
+#human{
+    width:50px;
+    
+}
+#kind{
+    width:100px;
+    margin-left: 80px;
+    height:100px;
+}
+#strong{
+    width:120px;
+    margin-left: 50px;
+}
 
 .hide{
 display:  none !important;
 }
+
+main{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: baseline;
+    
+}
+.score{
+    margin: 0;
+    text-align: center;
+    width:70%;
+    font-size: 70px;
+}
+
+
+
+
+
+
+
+
+
 
 #prepare{
     
@@ -84,4 +123,37 @@ form{
     margin: auto;
     height: 100px;
     font-size: 50px;
+}
+
+
+
+
+
+#el0{
+    border-top: none;
+    border-left: none;
+}
+#el1{
+    border-top: none;
+}
+#el2{
+    border-top: none;
+    border-right: none;
+}
+#el3{
+    border-left: none;
+}
+#el5{
+    border-right: none;
+}
+#el6{
+    border-bottom: none;
+    border-left: none;
+}
+#el7{
+    border-bottom: none;
+}
+#el8{
+    border-bottom: none;
+    border-right: none;
 }
