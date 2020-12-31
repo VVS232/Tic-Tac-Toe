@@ -1,0 +1,87 @@
+body{
+    background-color: rgb(197, 195, 195);
+    /*background-image: url(https://rwohh0al2o-flywheel.netdna-ssl.com/wp-content/uploads/2018/01/wooden-table-background.jpg);*/
+    /*background-image: url(https://wallpaperaccess.com/full/2578754.jpg);*/
+}
+header{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr)
+}
+#player1{
+    justify-self: start;
+}
+#player2{
+    justify-self: end;
+}
+
+#grid{
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(3,1fr);
+  width:20vw;
+  height: 20vw;
+  margin:auto;
+  gap:7px 7px;
+}
+
+.grid-el{
+    background-color: aqua;
+}
+
+
+.hide{
+display:  none !important;
+}
+
+#prepare{
+    
+    /*background-image: url("img/media_istockphoto_com-notebook-squared-paper-with-metallic-clip-isolated-on-white-vector-id1064951268.png");
+    background-size: cover;*/
+    display: flex;
+    justify-content: center;
+    background-color: rgb(221, 221, 221);
+    width:500px;
+    height: 600px;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: auto;
+    margin-top: 200px;
+    padding-bottom: 15px;
+}
+.opponent{
+ width:45%;
+ height:100px;
+ border: none;
+ background-color: rgb(199, 146, 146);
+ margin:auto;
+  margin-top:12px;
+  font-size: 40px;
+  color:black
+
+}
+
+#opponents{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+form{
+    width:65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#choose{
+    text-align: center;
+    font-size: 30px;
+    margin: 0;
+
+}
+#start{
+    width:65%;
+    margin: auto;
+    height: 100px;
+    font-size: 50px;
+}
