@@ -16,13 +16,17 @@ const gameBoard=(function(){
         if (board[$(this).data("index")]!=""){
             return;
         }
-        this=$("#el4")
+        
+
         let marker=whoseTurn();
-        weakAI.makeMove()
+        
 
         $(this).text(marker)
         board[$(this).data("index")]=marker
+
         game.checkWin();
+        weakAI.makeMove()
+
     }
     function whoseTurn(){
         if (game.turn==1){
@@ -30,6 +34,7 @@ const gameBoard=(function(){
             return game.player1.placeMarker()
         }
         else{
+
             game.turn=1;
             return game.player2.placeMarker()
         }
@@ -49,7 +54,7 @@ const game=(function(){
 
     let turn=1;
     let P1score=0;
-    let P2score=2;
+    let P2score=0;
     let $score=$(".scores");
 
 
@@ -108,15 +113,15 @@ return {turn, player1, player2 ,checkWin}
 
 const weakAI=(function(){
     function makeMove(){
-        if (game.turn==2){
-            let index;
-            do {
-                 index=Math.floor( Math.random()*9)
+        if(game.turn==2){
+            let index
+            index=Math.floor( Math.random()*9);
+            if ($("#el"+index).text()==""){
+                $("#el"+index).click();
             }
-             while (gameBoard.checkBoard()[index]!="");
-             console.log(gameBoard.checkBoard()[index])
-
-            $("#el"+index).click();
+             else{
+                 makeMove();
+             }            
         }
     }
     return{makeMove}
