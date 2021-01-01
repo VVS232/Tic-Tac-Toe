@@ -28,7 +28,7 @@ header{
 
 .grid-el{
     border: 3px black solid;
-    font-size: 8em;
+    font-size: 7em;
     text-align: center;
 }
 .player{
@@ -59,7 +59,7 @@ main{
     align-items: start;
     
 }
-.score{
+.scores{
     margin: 0;
     text-align: center;
     width:70%;
