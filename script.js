@@ -16,7 +16,10 @@ const gameBoard=(function(){
         if (board[$(this).data("index")]!=""){
             return;
         }
+        this=$("#el4")
         let marker=whoseTurn();
+        weakAI.makeMove()
+
         $(this).text(marker)
         board[$(this).data("index")]=marker
         game.checkWin();
@@ -35,14 +38,15 @@ const gameBoard=(function(){
     function checkBoard(){
         return board;
     }
-    return {checkBoard}
+    return {checkBoard, $gridEls}
 
 })();
 
-
-
-
+       
+       
+       
 const game=(function(){
+
     let turn=1;
     let P1score=0;
     let P2score=2;
@@ -84,6 +88,10 @@ const game=(function(){
             $score.find("#P2score").text(P2score);
 
         }
+        endGame();
+    }
+    function endGame(){
+        gameBoard.$gridEls.off(gameBoard.addMark)
     }
 
 
@@ -97,3 +105,21 @@ return {turn, player1, player2 ,checkWin}
 
 
 
+
+const weakAI=(function(){
+    function makeMove(){
+        if (game.turn==2){
+            let index;
+            do {
+                 index=Math.floor( Math.random()*9)
+            }
+             while (gameBoard.checkBoard()[index]!="");
+             console.log(gameBoard.checkBoard()[index])
+
+            $("#el"+index).click();
+        }
+    }
+    return{makeMove}
+
+
+})();
