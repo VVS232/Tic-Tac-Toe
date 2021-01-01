@@ -17,8 +17,8 @@ header{
 
 #grid{
     display: grid;
-    grid-template-rows: repeat(3,1fr);
-    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,150px);
+    grid-template-columns: repeat(3,150px);
   width:25vw;
   height: 25vw;
   margin:auto;
@@ -91,14 +91,16 @@ main{
     padding-bottom: 15px;
 }
 .opponent{
- width:45%;
- height:100px;
+ width:40%;
+ height:80px;
  border: none;
- background-color: rgb(199, 146, 146);
+ background-color: rgb(136, 134, 134);
  margin:auto;
   margin-top:12px;
   font-size: 40px;
-  color:black
+  color:black;
+  border: 1px solid black;
+  border-radius: 5px;
 
 }
 
@@ -116,8 +118,10 @@ form{
 }
 #choose{
     text-align: center;
-    font-size: 30px;
+    font-size: 40.5px;
     margin: 0;
+    margin-bottom: 20px;
+    margin-top: 10px;
 
 }
 #start{
@@ -125,6 +129,10 @@ form{
     margin: auto;
     height: 100px;
     font-size: 50px;
+    background-color: silver;
+    border: 1px solid black;
+    border-radius: 5px;
+    color:black
 }
 
 
