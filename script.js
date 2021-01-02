@@ -148,7 +148,7 @@ const weakAI = (function () {
 
 
 const strongAI = (function () {
-  let counter = 1;  // number of round
+  let counter = 1; // number of round
   let board = gameBoard.checkBoard;
 
   function makeMove() {
@@ -160,46 +160,81 @@ const strongAI = (function () {
             $("#el4").click();
             counter++;
             return;
-          } 
-          else {
+          } else {
             $("#el0").click();
             counter++;
             return;
           }
-          case 2: //round 2
-          for (let i=0;i<8;i++){  //checking for doubles in rows
-              if ([2,5].includes(i)){
+        case 2: //round 2
+          for (let i = 0; i < 8; i++) {
+            //checking for doubles in rows
+            if ([2, 5].includes(i)) {
+              continue;
+            }
+            if (board()[i] == "X" && board()[i + 1] == "X") {
+              if ([0, 3, 6].includes(i)) {
+                $(`#el${i + 2}`).click();
+                counter++;
+                return;
+              } else {
+                $(`#el${i - 1}`).click();
+                counter++;
+                return;
+              }
+            } else if (board()[i] == "X" && board()[i + 2] == "X") {
+              if (i==4){
                 continue;
               }
-              if (board()[i]=="X"&&board()[i+1]=="X"){
-                  if([0,3,6].includes(i)){ 
-                    $(`#el${i+2}`).click();
-                    counter++;
-                    return;
-                }
-                else{
-                    $(`#el${i-1}`).click();
-                    counter++;
-                    return;
-                }
-              }
-
+              $(`#el${i + 1}`).click();
+              counter++;
+            return;
+            }
           } // end checking rows
-          for (let i=0;i<3;i++){ //checking columns
-              for (let j=i;j<i+7;j+=3){
-                  if ([6,7,8].includes(j)){
-                      continue;
-                  }
-                  if (board()[j]=="X"&&board()[j+3]=="X"){
-                      if ([0,1,2].includes(j)){
-                        $(`#el${j+6}`).click();
-                      }
-                      else{
-                        $(`#el${j-3}`).click();
-                      }
-                  }
+          for (let i = 0; i < 3; i++) {
+            //checking columns
+            for (let j = i; j < i + 7; j += 3) {
+              if ([6, 7, 8].includes(j)) {
+                continue;
               }
-          }//stop checking columns 
+              if (board()[j] == "X" && board()[j + 3] == "X") {
+                if ([0, 1, 2].includes(j)) {
+                  $(`#el${j + 6}`).click();
+                  counter++;
+                  return;
+                } else {
+                  $(`#el${j - 3}`).click();
+                  counter++;
+                  return;
+                }
+              }
+              else if (board()[j] == "X" && board()[j + 6] == "X"){
+                $(`#el${j + 3}`).click();
+                counter++;
+            return;
+
+              }
+            }
+          } //stop checking columns
+          if (board()[0] == "X" && board()[4] == "X") {
+            //checking diagonals
+            $(`#el8`).click();
+            counter++;
+            return;
+          } else if (board()[2] == "X" && board()[4] == "X") {
+            $(`#el6`).click();
+            counter++;
+            return;
+          } else if (board()[6] == "X" && board()[4] == "X") {
+            $(`#el2`).click();
+            counter++;
+            return;
+          } else if (board()[8] == "X" && board()[4] == "X") {
+            $(`#el2`).click();
+            counter++;
+            return;
+          } //end checking diagonals
+        case 3:
+
       }
     }
   }
