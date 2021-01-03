@@ -2,7 +2,6 @@ body{
     background-color: rgb(197, 195, 195);
     /*background-image: url(https://rwohh0al2o-flywheel.netdna-ssl.com/wp-content/uploads/2018/01/wooden-table-background.jpg);*/
     /*background-image: url(https://wallpaperaccess.com/full/2578754.jpg);*/
-    height: 100vh;
 }
 header{
     display: grid;
@@ -133,6 +132,25 @@ main{
 }
 
 @media(max-width:950px){
+    #prepare{
+        max-width:90vw;
+    }
+    #opponents button{
+        font-size: 20px;
+    }
+    #restart{
+        left:6%;
+        max-width:90vw;
+    }
+    #winner{
+        font-size: 30px;
+        width:100%
+    }
+    #changeOpp, #again{
+        width:130px;
+        font-size: 20px;
+    }
+    
     main{
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: min-content 1fr;
@@ -214,12 +232,13 @@ main{
     display: flex;
     justify-content: center;
     background-color: rgb(221, 221, 221);
+    max-height: 80vh;
     width:500px;
     height: 600px;
     border: 1px solid black;
     border-radius: 4px;
     margin: auto;
-    margin-top: 200px;
+    margin-top: 100px;
     padding-bottom: 15px;
 }
 .opponent{
