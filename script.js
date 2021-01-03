@@ -45,7 +45,7 @@ const game = (function () {
   let turn = 1;
   let P1score = 0;
   let P2score = 0;
-  let opponent=null;
+  let opponent=null; //for selecting opponent at starting screen
   
 
 
@@ -55,11 +55,12 @@ const game = (function () {
   let $opponents=$("#opponents");
   let $game=$("#game");
   $game.hide();
+  let $restart=$("#restart");
+  $restart.hide();
   $opponents.find(".opponent").click(chooseOpp);
   $opponents.find("#start").click(startGame);
-  let $restart=$("#restart");
   $restart.find("#again").click(startGame);
-  $restart.hide();
+
   $restart.find("#changeOpp").click(changeOpp);
 
 
@@ -150,6 +151,7 @@ const game = (function () {
   
   function changeScore(PlayerWin) {
     if (PlayerWin == 1) {
+      console.log("")
       P1score++;
       $score.find("#P1score").text(P1score);
       $restart.show();
@@ -229,7 +231,6 @@ const strongAI = (function () {
 
   
   function makeMove() {
-    console.log(rit.counter)
     if (game.turn == 2) {
       switch (rit.counter) {
         case 1: //round 1
@@ -508,6 +509,11 @@ break;
   }
 }
 function checkSides(){
+  if (board()[8]=="X"){
+    $("#el2").click();
+    rit.counter++;
+    return 1;
+  }
   if (board()[3]==""){
     $("#el3").click();
     rit.counter++;
