@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
 <body>
-    <div  >
+    <div  id="game"  >
 <header>
     <div class="player" id="player1">You
         <br> <img src="https://historicalmovementarchive.org/wp-content/uploads/2019/06/2-28725_baidu-person-outline-comments-human-head-icon-png.png" id="human">
@@ -26,6 +26,16 @@
 <main>
     <div class="scores" id="myScore">
         Score<br><span id="P1score">0</span>
+    </div>
+    <div id="restart">
+        <span id="winner">You won. Play again?</span>
+        <button type="button" id="changeOpp">
+            Change opponent
+        </button>
+        <button type="button" id="again">
+            Play again
+        </button>
+
     </div>
     <div id="grid">
         <div class="grid-el" id="el0" data-index="0"></div>
@@ -44,21 +54,23 @@
 </div>
 </main>
 
-<div class="hide" id="prepare">
+<div  id="prepare">
    
        
     <div id="opponents">
         <p id="choose">Choose the opponent</p><br>
         <button type="button" name="opponent" value="human" class="opponent">Human
-        </button>   <button type="button" name="opponent" value="kindAI"class="opponent">Kind AI
+        </button>   <button type="button" name="opponent" value="weakAI"class="opponent">Kind AI
         </button>
-        <button type="button" name="opponent" value="Skynet"class="opponent">Skynet
+        <button type="button" name="opponent" value="strongAI"class="opponent">Skynet
         </button>
         <button type="button" id="start">Start</button>
     </div>
+    
 
  
 </div>
+
 
 </body>
 

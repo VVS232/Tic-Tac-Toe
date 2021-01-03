@@ -1,6 +1,8 @@
 const gameBoard = (function () {
   let board = ["", "", "", "", "", "", "", "", ""];
-
+  function resetBoard(){
+    board=["", "", "", "", "", "", "", "", ""]
+  }
   //Find DOM's elements
   let $gridEls = $(".grid-el");
 
@@ -19,6 +21,10 @@ const gameBoard = (function () {
     board[$(this).data("index")] = marker;
 
     game.checkWin();
+    if(game.opponent=="weakAI"){
+      weakAI.makeMove()
+    }
+    if(game.opponent=="strongAI")
     strongAI.makeMove();
   }
   function whoseTurn() {
@@ -33,14 +39,33 @@ const gameBoard = (function () {
   function checkBoard() {
     return board;
   }
-  return { checkBoard, $gridEls };
+  return { checkBoard, $gridEls, resetBoard };
 })();
 
+
+
 const game = (function () {
+  
   let turn = 1;
   let P1score = 0;
   let P2score = 0;
+  let opponent=null;
+
+
+
+
+  //DOM
   let $score = $(".scores");
+  let $opponents=$("#opponents");
+  let $game=$("#game");
+  $game.hide();
+  $opponents.find(".opponent").click(chooseOpp);
+  $opponents.find("#start").click(startGame);
+  let $restart=$("#restart");
+  $restart.find("#again").click(startGame);
+  $restart.hide();
+  $restart.find("#changeOpp").click(changeOpp);
+
 
   //making players
   const player = function (marker) {
@@ -109,23 +134,59 @@ const game = (function () {
     ) {
       changeScore(2);
     }
+    if(!gameBoard.checkBoard().includes("")){
+      changeScore(3);
+    }
   }
   function changeScore(PlayerWin) {
     if (PlayerWin == 1) {
       P1score++;
       $score.find("#P1score").text(P1score);
+      $restart.show();
+      $restart.find("#winner").text("You won. Play again?")
+
     }
     if (PlayerWin == 2) {
       P2score++;
       $score.find("#P2score").text(P2score);
+      $restart.show();
+      $restart.find("#winner").text("You lose. Play again?")
+    }
+    if (PlayerWin==3){
+      $restart.show();
+      $restart.find("#winner").text("That's tie. Play again?")
     }
     endGame();
   }
+
+function startGame(){
+  gameBoard.resetBoard();
+  gameBoard.$gridEls.text("");
+  $restart.hide();
+  if(game.opponent!=null){
+  $("#prepare").hide();
+  $game.fadeIn();
+  gameBoard.$gridEls.click(gameBoard.addMark)
+  gameBoard.$gridEls.css('pointer-events', 'initial')
+  }
+}
+
   function endGame() {
-    gameBoard.$gridEls.off(gameBoard.addMark);
+    gameBoard.$gridEls.css('pointer-events', 'none')
+    //gameBoard.$gridEls.off(gameBoard.addMark);
+
   }
 
-  return { turn, player1, player2, checkWin };
+  function chooseOpp(){
+    game.opponent=this.value;
+  }
+  function changeOpp(){
+    $game.hide();
+    $("#prepare").fadeIn();
+    
+  }
+
+  return { turn, player1, player2, checkWin,opponent };
 })();
 
 
