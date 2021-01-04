@@ -34,16 +34,16 @@ header{
 .player{
     font-size: 50px;
 }
-#human{
+#human, #humanPlayer{
     width:50px;
     
 }
-#kind{
+#weakAI{
     width:100px;
     margin-left: 80px;
     height:100px;
 }
-#strong{
+#strongAI{
     width:120px;
     margin-left: 50px;
 }
@@ -184,16 +184,16 @@ main{
     .player{
     font-size: 50px;
 }
-#human{
+#human, #humanPlayer{
     width:50px;
     
 }
-#kind{
+#weakAI{
     width:100px;
     margin-left: 80px;
     height:100px;
 }
-#strong{
+#strongAI{
     width:120px;
     margin-left: 50px;
 }
@@ -207,16 +207,16 @@ main{
     justify-self: end;
     margin-right: -3px;
 }
-#human{
+#human, #humanPlayer{
     width:40px;
     
 }
-#kind{
+#weakAI{
     width:100px;
     margin-left: 80px;
     height:100px;
 }
-#strong{
+#strongAI{
     width:90px;
     margin-left: 0px;
 }

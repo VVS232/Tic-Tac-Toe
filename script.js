@@ -57,6 +57,8 @@ const game = (function () {
   $game.hide();
   let $restart=$("#restart");
   $restart.hide();
+  $oppPic=$(".oppPic")
+  $oppPic.hide();
   $opponents.find(".opponent").click(chooseOpp);
   $opponents.find("#start").click(startGame);
   $restart.find("#again").click(startGame);
@@ -195,6 +197,9 @@ function startGame(){
   function chooseOpp(){
     
     game.opponent=this.value;
+    $(`#${game.opponent}`).show();
+
+
   }
   function changeOpp(){
     strongAI.rit.counter=1;
@@ -226,7 +231,7 @@ const weakAI = (function () {
 
 
 const strongAI = (function () {
-  let rit={counter: 1}; // number of round
+  let rit={counter: 1}; // number of round (object is needed to be able to change it(not the copy) outside the scope)
   let board = gameBoard.checkBoard;
 
   
