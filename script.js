@@ -1,7 +1,8 @@
 const gameBoard = (function () {
-  let board = ["", "", "", "", "", "", "", "", ""];
-  function resetBoard(){
-    board=["", "", "", "", "", "", "", "", ""]
+  //things related to the board itself (mostly)
+  let board = ["", "", "", "", "", "", "", "", ""]; //array of grid values
+  function resetBoard() {
+    board = ["", "", "", "", "", "", "", "", ""];
   }
   //Find DOM's elements
   let $gridEls = $(".grid-el");
@@ -32,41 +33,35 @@ const gameBoard = (function () {
     }
   }
   function checkBoard() {
+    //priviliged method to get board array
     return board;
   }
   return { checkBoard, $gridEls, resetBoard };
-  
 })();
 
-
-
 const game = (function () {
-  
   let turn = 1;
   let P1score = 0;
   let P2score = 0;
-  let opponent=null; //for selecting opponent at starting screen
-  
-
-
+  let opponent = null; //for selecting opponent at starting screen
 
   //DOM
   let $score = $(".scores");
-  let $opponents=$("#opponents");
-  let $game=$("#game");
+  let $opponents = $("#opponents");
+  let $game = $("#game");
   $game.hide();
-  let $restart=$("#restart");
+  let $restart = $("#restart");
   $restart.hide();
-  $oppPic=$(".oppPic")
+  $oppPic = $(".oppPic");
   $oppPic.hide();
+
+  //events
   $opponents.find(".opponent").click(chooseOpp);
   $opponents.find("#start").click(startGame);
   $restart.find("#again").click(startGame);
-
   $restart.find("#changeOpp").click(changeOpp);
 
-
-  //making players
+  //making players (factory)
   const player = function (marker) {
     let placeMarker = function () {
       return marker;
@@ -104,8 +99,7 @@ const game = (function () {
         gameBoard.checkBoard()[6] == "X")
     ) {
       changeScore(1);
-    }
-    else if (
+    } else if (
       (gameBoard.checkBoard()[0] == "O" &&
         gameBoard.checkBoard()[1] === "O" &&
         gameBoard.checkBoard()[2] == "O") ||
@@ -132,87 +126,73 @@ const game = (function () {
         gameBoard.checkBoard()[6] == "O")
     ) {
       changeScore(2);
-    }
-    else if(!gameBoard.checkBoard().includes("")){
+    } else if (!gameBoard.checkBoard().includes("")) {
       changeScore(3);
-    }
-    else{
+    } else {
       AIMove();
     }
   }
-  
-  function AIMove(){
-    if(game.opponent=="weakAI"){
-      weakAI.makeMove()
+
+  function AIMove() {
+    if (game.opponent == "weakAI") {
+      weakAI.makeMove();
     }
-    if(game.opponent=="strongAI")
-    strongAI.makeMove();
+    if (game.opponent == "strongAI") strongAI.makeMove();
   }
-  
-  
-  
+
   function changeScore(PlayerWin) {
     if (PlayerWin == 1) {
-      console.log("")
+      console.log("");
       P1score++;
       $score.find("#P1score").text(P1score);
       $restart.show();
-      $restart.find("#winner").text("You won. Play again?")
-
+      $restart.find("#winner").text("You won. Play again?");
     }
     if (PlayerWin == 2) {
       P2score++;
       $score.find("#P2score").text(P2score);
       $restart.show();
-      $restart.find("#winner").text("You lose. Play again?")
+      $restart.find("#winner").text("You lose. Play again?");
     }
-    if (PlayerWin==3){
+    if (PlayerWin == 3) {
       $restart.show();
-      $restart.find("#winner").text("That's tie. Play again?")
+      $restart.find("#winner").text("That's tie. Play again?");
     }
     endGame();
   }
 
-function startGame(){
-  gameBoard.resetBoard();
-  gameBoard.$gridEls.text("");
-  $restart.hide();
-  if(game.opponent!=null){
-  $("#prepare").hide();
-  $game.fadeIn();
-  gameBoard.$gridEls.click(gameBoard.addMark)
-  gameBoard.$gridEls.css('pointer-events', 'initial');
-  strongAI.rit.counter=1;
-
-
+  function startGame() {
+    gameBoard.resetBoard();
+    gameBoard.$gridEls.text("");
+    $restart.hide();
+    if (game.opponent != null) {
+      $("#prepare").hide();
+      $game.fadeIn();
+      gameBoard.$gridEls.click(gameBoard.addMark);
+      gameBoard.$gridEls.css("pointer-events", "initial");
+      strongAI.rit.counter = 1;
+    }
   }
-}
 
   function endGame() {
-    gameBoard.$gridEls.css('pointer-events', 'none')
-    game.turn=1;
-    strongAI.rit.counter=1;
+    gameBoard.$gridEls.css("pointer-events", "none");
+    game.turn = 1;
+    strongAI.rit.counter = 1;
   }
 
-  function chooseOpp(){
-    
-    game.opponent=this.value;
+  function chooseOpp() {
+    game.opponent = this.value;
     $(`#${game.opponent}`).show();
-
-
   }
-  function changeOpp(){
-    strongAI.rit.counter=1;
+  function changeOpp() {
+    strongAI.rit.counter = 1;
 
     $game.hide();
     $("#prepare").fadeIn();
-    
   }
 
-  return { turn, player1, player2, checkWin,opponent };
+  return { turn, player1, player2, checkWin, opponent };
 })();
-
-
 
 const weakAI = (function () {
   function makeMove() {
@@ -229,12 +209,10 @@ const weakAI = (function () {
   return { makeMove };
 })();
 
-
 const strongAI = (function () {
-  let rit={counter: 1}; // number of round (object is needed to be able to change it(not the copy) outside the scope)
+  let rit = { counter: 1 }; // number of round (object is needed to be able to change it(not the copy) outside the scope)
   let board = gameBoard.checkBoard;
 
-  
   function makeMove() {
     if (game.turn == 2) {
       switch (rit.counter) {
@@ -250,31 +228,25 @@ const strongAI = (function () {
             return;
           }
         case 2: //round 2
-        if(checkRows()){
-          break;
-        }
-        else if(checkColumns()){
-          break;
-        }
-        else if(checkDiagonals()){
-          break;
-        }
-        else{
-          checkSides()
-        }
+          if (checkRows()) {
+            break;
+          } else if (checkColumns()) {
+            break;
+          } else if (checkDiagonals()) {
+            break;
+          } else {
+            checkSides();
+          }
 
-break;
+          break;
         case 3:
-          if(checkRows()){
+          if (checkRows()) {
             break;
-          }
-          else if(checkColumns()){
+          } else if (checkColumns()) {
             break;
-          }
-          else if(checkDiagonals()){
+          } else if (checkDiagonals()) {
             break;
-          }
-          else{
+          } else {
             let index = Math.floor(Math.random() * 9);
             if ($("#el" + index).text() == "") {
               $("#el" + index).click();
@@ -284,49 +256,45 @@ break;
               makeMove();
             }
           }
-        break;
-          case 4:
-            case 3:
-              if(checkRows()){
-                break;
-              }
-              else if( checkColumns()){
-                break;
-              }
-              else if(checkDiagonals()){
-                break;
-              }
-              else{
-                let index = Math.floor(Math.random() * 9);
-                if ($("#el" + index).text() == "") {
-                  $("#el" + index).click();
-                  rit.counter++;
-                  return;
-                } else {
-                  makeMove();
-                }
-              }
+          break;
+        case 4:
+        case 3:
+          if (checkRows()) {
             break;
+          } else if (checkColumns()) {
+            break;
+          } else if (checkDiagonals()) {
+            break;
+          } else {
+            let index = Math.floor(Math.random() * 9);
+            if ($("#el" + index).text() == "") {
+              $("#el" + index).click();
+              rit.counter++;
+              return;
+            } else {
+              makeMove();
+            }
+          }
+          break;
       }
     }
   }
-  function checkRows(){
-    
+  function checkRows() {
     for (let i = 0; i < 8; i++) {
       //checking for doubles in rows
       if ([2, 5].includes(i)) {
         continue;
       }
-      if(board()[i] == "O" && board()[i + 1] == "O"){
+      if (board()[i] == "O" && board()[i + 1] == "O") {
         if ([0, 3, 6].includes(i)) {
-          if (board()[i+2]!=""){
+          if (board()[i + 2] != "") {
             continue;
           }
           $(`#el${i + 2}`).click();
           rit.counter++;
           return 1;
         } else {
-          if (board()[i-1]!=""){
+          if (board()[i - 1] != "") {
             continue;
           }
           $(`#el${i - 1}`).click();
@@ -336,77 +304,76 @@ break;
       }
       if (board()[i] == "X" && board()[i + 1] == "X") {
         if ([0, 3, 6].includes(i)) {
-          if (board()[i+2]!=""){
+          if (board()[i + 2] != "") {
             continue;
           }
           $(`#el${i + 2}`).click();
           rit.counter++;
           return 1;
         } else {
-          if (board()[i-1]!=""){
+          if (board()[i - 1] != "") {
             continue;
           }
           $(`#el${i - 1}`).click();
           rit.counter++;
           return 1;
         }
+      } else if (board()[i] == "O" && board()[i + 2] == "O") {
+        if (i == 4 || board()[i + 1] != "" || [1, 5].includes(i)) {
+          continue;
+        }
+        if (board()[0] == "O" && board()[2] == "O") {
+          if (board()[1] != "") {
+            continue;
+          }
+          $("#el1").click();
+          rit.counter++;
+          return 1;
+        }
+        if (board()[i + 1] != "") {
+          continue;
+        }
+        $(`#el${i + 1}`).click();
+        rit.counter++;
+        return 1;
       }
-       else if(board()[i] == "O" && board()[i + 2] == "O"){
-        if (i==4||board()[i+1]!=""||[1,5].includes(i)){
+      if (board()[i] == "X" && board()[i + 2] == "X") {
+        if (i == 4 || board()[i + 1] != "" || [1, 5].includes(i)) {
           continue;
         }
-        if (board()[0]=="O" && board()[2]=="O"){
-          if (board()[1]!=""){
+        if (board()[0] == "X" && board()[2] == "X") {
+          if (board()[1] != "") {
             continue;
           }
           $("#el1").click();
           rit.counter++;
-      return 1;
+          return 1;
         }
-        if (board()[i+1]!=""){
+        if (board()[i + 1] != "") {
           continue;
         }
         $(`#el${i + 1}`).click();
         rit.counter++;
-      return 1;
-       }
-       if (board()[i] == "X" && board()[i + 2] == "X") {
-        if (i==4||board()[i+1]!=""||[1,5].includes(i)){
-          continue;
-        }
-        if (board()[0]=="X" && board()[2]=="X"){
-          if (board()[1]!=""){
-            continue;
-          }
-          $("#el1").click();
-          rit.counter++;
-      return 1;
-        }
-        if (board()[i+1]!=""){
-          continue;
-        }
-        $(`#el${i + 1}`).click();
-        rit.counter++;
-      return 1;
+        return 1;
       }
     } // end checking rows
   }
-  function checkColumns(){ 
+  function checkColumns() {
     for (let i = 0; i < 3; i++) {
       for (let j = i; j < i + 7; j += 3) {
         if ([6, 7, 8].includes(j)) {
           continue;
         }
-        if (board()[j] == "O" && board()[j + 3] == "O"){ 
+        if (board()[j] == "O" && board()[j + 3] == "O") {
           if ([0, 1, 2].includes(j)) {
-            if (board()[j+6]!=""){
+            if (board()[j + 6] != "") {
               continue;
             }
             $(`#el${j + 6}`).click();
             rit.counter++;
             return 1;
           } else {
-            if (board()[j-3]!=""){
+            if (board()[j - 3] != "") {
               continue;
             }
             $(`#el${j - 3}`).click();
@@ -416,131 +383,123 @@ break;
         }
         if (board()[j] == "X" && board()[j + 3] == "X") {
           if ([0, 1, 2].includes(j)) {
-            if (board()[j+6]!=""){
+            if (board()[j + 6] != "") {
               continue;
             }
             $(`#el${j + 6}`).click();
             rit.counter++;
             return 1;
           } else {
-            if (board()[j-3]!=""){
+            if (board()[j - 3] != "") {
               continue;
             }
             $(`#el${j - 3}`).click();
             rit.counter++;
             return 1;
           }
-        }
-        else if(board()[j] == "O" && board()[j + 6] == "O"){
-          if (board()[j+3]!=""){
+        } else if (board()[j] == "O" && board()[j + 6] == "O") {
+          if (board()[j + 3] != "") {
             continue;
           }
           $(`#el${j + 3}`).click();
           rit.counter++;
-      return 1;
-
+          return 1;
         }
-        if (board()[j] == "X" && board()[j + 6] == "X"){
-          if (board()[j+3]!=""){
+        if (board()[j] == "X" && board()[j + 6] == "X") {
+          if (board()[j + 3] != "") {
             continue;
           }
           $(`#el${j + 3}`).click();
           rit.counter++;
-      return 1;
-
+          return 1;
         }
       }
     } //stop checking columns
   }
 
-
-  function checkDiagonals(){
-    
-    if(board()[0] == "O" && board()[4] == "O"){
-      if (board()[8]==""){
+  function checkDiagonals() {
+    if (board()[0] == "O" && board()[4] == "O") {
+      if (board()[8] == "") {
         $(`#el8`).click();
         rit.counter++;
-        return 1;            } 
+        return 1;
+      }
     }
     if (board()[0] == "X" && board()[4] == "X") {
-      if (board()[8]==""){
+      if (board()[8] == "") {
         $(`#el8`).click();
         rit.counter++;
-        return 1;            }
-      
+        return 1;
+      }
+    } else if (board()[2] == "O" && board()[4] == "O") {
+      if (board()[6] == "") {
+        $(`#el6`).click();
+        rit.counter++;
+        return 1;
+      }
     }
-     else if(board()[2] == "O" && board()[4] == "O"){
-      if (board()[6]==""){
+    if (board()[2] == "X" && board()[4] == "X") {
+      if (board()[6] == "") {
         $(`#el6`).click();
-      rit.counter++;
-      return 1;;
+        rit.counter++;
+        return 1;
       }
-     }
-      if (board()[2] == "X" && board()[4] == "X") {
-      if (board()[6]==""){
-        $(`#el6`).click();
-      rit.counter++;
-      return 1;;
-      }
-      
-    } 
-    else if (board()[6] == "O" && board()[4] == "O"){
-      if (board()[2]==""){
+    } else if (board()[6] == "O" && board()[4] == "O") {
+      if (board()[2] == "") {
         $(`#el2`).click();
-      rit.counter++;
-      return 1;;
+        rit.counter++;
+        return 1;
       }
     }
     if (board()[6] == "X" && board()[4] == "X") {
-      if (board()[2]==""){
+      if (board()[2] == "") {
         $(`#el2`).click();
-      rit.counter++;
-      return 1;;
+        rit.counter++;
+        return 1;
       }
-      
-    } else if (board()[8] == "O" && board()[4] == "O"){
-      if (board()[0]==""){
+    } else if (board()[8] == "O" && board()[4] == "O") {
+      if (board()[0] == "") {
         $(`#el0`).click();
-      rit.counter++;
-      return 1;;
+        rit.counter++;
+        return 1;
       }
     }
     if (board()[8] == "X" && board()[4] == "X") {
-      if (board()[0]==""){
+      if (board()[0] == "") {
         $(`#el0`).click();
-      rit.counter++;
-      return 1;;
+        rit.counter++;
+        return 1;
       }
+    }
   }
-}
-function checkSides(){
-  if (board()[8]=="X"){
-    $("#el2").click();
-    rit.counter++;
-    return 1;
+  function checkSides() {
+    if (board()[8] == "X") {
+      $("#el2").click();
+      rit.counter++;
+      return 1;
+    }
+    if (board()[3] == "") {
+      $("#el3").click();
+      rit.counter++;
+      return 1;
+    }
+
+    if (board()[5] == "") {
+      $("#el5").click();
+      rit.counter++;
+      return 1;
+    }
+    if (board()[1] == "") {
+      $("#el1").click();
+      rit.counter++;
+      return 1;
+    }
+    if (board()[7] == "") {
+      $("#el7").click();
+      rit.counter++;
+      return 1;
+    }
   }
-  if (board()[3]==""){
-    $("#el3").click();
-    rit.counter++;
-    return 1;
-}
 
-if (board()[5]==""){
-$("#el5").click();
-rit.counter++;
-return 1;
-}
-if (board()[1]==""){
-$("#el1").click();
-rit.counter++;
-return 1;
-}
-if (board()[7]==""){
-$("#el7").click();
-rit.counter++;
-return 1;
-}
-}
-
-  return {rit, makeMove, };
+  return { rit, makeMove };
 })();
